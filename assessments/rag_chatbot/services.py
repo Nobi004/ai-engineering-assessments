@@ -9,8 +9,10 @@ from assessments.rag_chatbot.schemas import RAGResponse, ChatMessage
 from core.database import AsyncSessionLocal
 from sqlmodel import select
 import structlog
-from uuid import uuid4, UUID
+from uuid import uuid4, UUIDimport os
 
+# base of repository - two levels up from this file
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
 llm_client = LLMClient()
 logger = structlog.get_logger()
 
@@ -32,6 +34,14 @@ Previous conversation:
 
     @staticmethod
     async def ingest_documents(company_id: str, docs_path: str = "data/uploads/02_rag/company_docs"):
+        # normalize a relative path against project root and ensure it exists
+        if not os.path.isabs(docs_path):
+            docs_path = os.path.join(_PROJECT_ROOT, docs_path)
+        docs_path = os.path.abspath(docs_path)
+        if not os.path.isdir(docs_path):
+            os.makedirs(docs_path, exist_ok=True)
+            logger.warning("created_docs_directory", path=docs_path)
+
         vectorstore = VectorStoreManager.get_vectorstore()
         splitter = RecursiveCharacterTextSplitter(chunk_size=RAGService.CHUNK_SIZE, chunk_overlap=RAGService.CHUNK_OVERLAP)
 
