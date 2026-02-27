@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from core.database import init_db
 from core.exceptions import AppBaseException
 from assessments.workflow_automation.routers import router
