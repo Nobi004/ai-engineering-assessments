@@ -5,11 +5,11 @@ from core.llm_client import LLMClient
 from core.vector_store import VectorStoreManager
 from core.embedding_client import embedding_client
 from core.logger import logger
-from assessments.rag_chatbot.schemas import RAGResponse
+from assessments.rag_chatbot.schemas import RAGResponse, ChatMessage
 from core.database import AsyncSessionLocal
 from sqlmodel import select
 import structlog
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 llm_client = LLMClient()
 logger = structlog.get_logger()

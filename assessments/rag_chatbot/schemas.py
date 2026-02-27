@@ -3,6 +3,7 @@ from datetime import datetime
 from uuid import UUID, uuid4
 from pydantic import BaseModel
 from typing import Literal
+from enum import Enum
 
 class Company(SQLModel, table=True):
     __tablename__ = "companies"
@@ -11,12 +12,16 @@ class Company(SQLModel, table=True):
     name: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
+class ChatRole(str, Enum):
+    user = "user"
+    assistant = "assistant"
+
 class ChatMessage(SQLModel, table=True):
     __tablename__ = "rag_chat_history"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     session_id: UUID
     company_id: str
-    role: Literal["user", "assistant"]
+    role: ChatRole
     content: str
     confidence: float | None = None
     created_at: datetime = Field(default_factory=datetime.utcnow)

@@ -2,7 +2,8 @@ from sqlmodel import SQLModel, Field, JSON, Column
 from pydantic import BaseModel, field_validator
 from datetime import datetime
 from uuid import UUID, uuid4
-from typing import Literal, Any
+from typing import Any, Literal
+from enum import Enum
 
 class LeadFields(BaseModel):
     name: str | None = None
@@ -23,6 +24,11 @@ class IntentClassification(BaseModel):
     intent: Literal["sales", "support", "partnership", "unknown"]
     confidence: float
 
+class WorkflowStatus(str, Enum):
+    processed = "processed"
+    fallback = "fallback"
+    failed = "failed"
+
 class WorkflowLead(SQLModel, table=True):
     __tablename__ = "workflow_leads"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
@@ -31,7 +37,7 @@ class WorkflowLead(SQLModel, table=True):
     confidence: float
     extracted_fields: dict = Field(sa_column=Column(JSON))
     ai_response: str | None = None
-    status: Literal["processed", "fallback", "failed"] = "processed"
+    status: WorkflowStatus = WorkflowStatus.processed
     request_id: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -41,5 +47,5 @@ class WorkflowResponse(BaseModel):
     confidence: float
     extracted_fields: LeadFields
     ai_response: str
-    status: str
+    status: WorkflowStatus
     execution_trace: dict
