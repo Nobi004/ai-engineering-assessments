@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.database import init_db
 from core.exceptions import AppBaseException
-from assessments.01_workflow_automation.routers import router
-from assessments.02_rag_chatbot.routers import router as rag_router
+from assessments.workflow_automation.routers import router
+from assessments.rag_chatbot.routers import router as rag_router
 import asyncio
 
 app = FastAPI(title="AI Engineering Assessment - Assessment 1")
