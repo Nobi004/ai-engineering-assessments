@@ -26,3 +26,25 @@ See Setup Instructions above.
 10. Error branch → fallback + status="fallback"
 
 Ready for Assessment 2.
+
+# Assessment 2: Company-Specific RAG Chatbot
+
+**Production features implemented:**
+- FAISS vector store with metadata filtering (company_id)
+- RecursiveCharacterTextSplitter (800 tokens + 120 overlap)
+- text-embedding-3-small embeddings
+- Similarity threshold 0.45 + refusal logic
+- Grounded prompt with exact refusal sentence
+- Persistent chat memory in SQLite
+- Confidence scoring from max cosine similarity
+- Ingestion script (supports .txt, .pdf)
+
+**How to test:**
+1. Run ingest script (creates Acme Corp knowledge base)
+2. Open Streamlit 8502
+3. Ask: "What is your pricing?" → should answer correctly
+4. Ask: "What is the weather in Dhaka?" → refusal with confidence 0
+
+**Multi-company ready:** Just change `company_id` and ingest new docs. Single index, zero leakage.
+
+Ready for Assessment 3.
