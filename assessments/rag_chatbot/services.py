@@ -5,7 +5,7 @@ from core.llm_client import LLMClient
 from core.vector_store import VectorStoreManager
 from core.embedding_client import embedding_client
 from core.logger import logger
-from assessments.02_rag_chatbot.schemas import RAGResponse
+from assessments.rag_chatbot.schemas import RAGResponse
 from core.database import AsyncSessionLocal
 from sqlmodel import select
 import structlog

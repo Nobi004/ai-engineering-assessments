@@ -1,6 +1,6 @@
 from core.llm_client import LLMClient
 from core.logger import logger
-from assessments.01_workflow_automation.schemas import IntentClassification, LeadFields, WorkflowLead, WorkflowResponse
+from assessments.workflow_automation.schemas import IntentClassification, LeadFields, WorkflowLead, WorkflowResponse
 from core.exceptions import ValidationError, DatabaseError
 from core.database import AsyncSessionLocal
 from tenacity import retry, stop_after_attempt, wait_exponential

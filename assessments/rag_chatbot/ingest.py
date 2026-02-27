@@ -1,5 +1,5 @@
 import asyncio
-from assessments.02_rag_chatbot.services import RAGService
+from assessments.rag_chatbot.services import RAGService
 
 async def main():
     print("🚀 Ingesting company documents...")

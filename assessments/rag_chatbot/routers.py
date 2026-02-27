@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from assessments.02_rag_chatbot.services import RAGService
-from assessments.02_rag_chatbot.schemas import RAGResponse
+from assessments.rag_chatbot.services import RAGService
+from assessments.rag_chatbot.schemas import RAGResponse
 from uuid import uuid4, UUID
 
 router = APIRouter(prefix="/api/02-rag", tags=["Assessment 2"])

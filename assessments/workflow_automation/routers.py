@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from assessments.01_workflow_automation.services import WorkflowService
-from assessments.01_workflow_automation.schemas import WorkflowResponse
+from assessments.workflow_automation.services import WorkflowService
+from assessments.workflow_automation.schemas import WorkflowResponse
 from core.exceptions import AppBaseException
 from fastapi.responses import JSONResponse
 
