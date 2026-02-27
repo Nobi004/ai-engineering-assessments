@@ -1,6 +1,7 @@
 import structlog
 from structlog.contextvars import merge_contextvars
 import logging
+from core.config import settings
 
 structlog.configure(
     processors=[
