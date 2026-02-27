@@ -1,4 +1,9 @@
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# ensure the .env is loaded from the project root (not the current working dir)
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+env_path = os.path.join(base_dir, ".env")
 
 class LLMSettings(BaseSettings):
     model: str = "gpt-4o-mini"
@@ -17,7 +22,7 @@ class Settings(BaseSettings):
     faiss_index_path: str = "data/faiss_indexes/rag_index"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=env_path,
         env_file_encoding="utf-8",
         extra="ignore",
         env_nested_delimiter="_",
