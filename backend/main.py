@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.database import init_db
 from core.exceptions import AppBaseException
 from assessments.01_workflow_automation.routers import router
+from assessments.02_rag_chatbot.routers import router as rag_router
 import asyncio
 
 app = FastAPI(title="AI Engineering Assessment - Assessment 1")
@@ -24,3 +25,4 @@ async def startup():
     await init_db()
 
 app.include_router(router)
+app.include_router(rag_router)
