@@ -1,0 +1,28 @@
+from sqlmodel import SQLModel, Field, JSON, Column
+from datetime import datetime
+from uuid import UUID, uuid4
+from pydantic import BaseModel
+from typing import Literal
+
+class Company(SQLModel, table=True):
+    __tablename__ = "companies"
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    company_id: str = Field(index=True, unique=True)  # e.g. "acme-corp"
+    name: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ChatMessage(SQLModel, table=True):
+    __tablename__ = "rag_chat_history"
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    session_id: UUID
+    company_id: str
+    role: Literal["user", "assistant"]
+    content: str
+    confidence: float | None = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class RAGResponse(BaseModel):
+    answer: str
+    confidence: float
+    sources: list[str]
+    refusal: bool
