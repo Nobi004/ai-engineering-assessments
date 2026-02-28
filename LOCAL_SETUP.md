@@ -43,7 +43,7 @@ This guide walks you through setting up and running the AI Agent SaaS Platform l
 
 ```bash
 git clone https://github.com/Nobi004/ai-engineering-assessments.git
-cd "Assesment_mysoft_heaven"
+cd "ai-engineering-assessments"
 ```
 
 ### Step 2: Create Python Virtual Environment
