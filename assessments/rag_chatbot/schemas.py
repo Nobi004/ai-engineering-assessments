@@ -31,3 +31,9 @@ class RAGResponse(BaseModel):
     confidence: float
     sources: list[str]
     refusal: bool
+
+
+class ChatRequest(BaseModel):
+    query: str
+    company_id: str = "acme-corp"
+    session_id: UUID | None = None
