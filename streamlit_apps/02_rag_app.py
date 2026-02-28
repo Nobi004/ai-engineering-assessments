@@ -29,15 +29,20 @@ if prompt := st.chat_input("Ask anything about the company..."):
                     json={"query": prompt, "company_id": "acme-corp", "session_id": str(st.session_state.session_id)},
                     timeout=30,
                 )
-                data = resp.json()
-
-                st.markdown(data["answer"])
-                st.caption(f"Confidence: {data['confidence']:.3f} | Sources: {', '.join(data['sources'])}")
-                
-                st.session_state.messages.append({
-                    "role": "assistant",
-                    "content": data["answer"],
-                    "confidence": data["confidence"]
-                })
+                if resp.status_code != 200:
+                    # show full response when it's an error
+                    st.error(f"API error ({resp.status_code}): {resp.text}")
+                else:
+                    data = resp.json()
+                    try:
+                        st.markdown(data["answer"])
+                        st.caption(f"Confidence: {data['confidence']:.3f} | Sources: {', '.join(data['sources'])}")
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": data["answer"],
+                            "confidence": data["confidence"]
+                        })
+                    except KeyError:
+                        st.error(f"Unexpected response format: {data}")
             except Exception as e:
                 st.error(f"Error: {e}")
