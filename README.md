@@ -45,6 +45,25 @@ Ready for Assessment 2.
 3. Ask: "What is your pricing?" → should answer correctly
 4. Ask: "What is the weather in Dhaka?" → refusal with confidence 0
 
+**API usage:**
+The `/api/02-rag/chat` endpoint accepts a POST with the user query.  You can
+provide the question either as a JSON body or as a URL query parameter:
+
+```bash
+# JSON body (used by Streamlit app)
+curl -X POST http://localhost:8000/api/02-rag/chat \
+     -H "Content-Type: application/json" \
+     -d '{"query": "tell me about the company"}'
+
+# query string (will also work)
+curl -X POST "http://localhost:8000/api/02-rag/chat?query=tell+me+about+the+company"
+```
+
+Leaving `query` out produces a `422` error (field required).
+
+Changing `company_id` or including `session_id` is also supported via the
+same body/parameters.
+
 **Multi-company ready:** Just change `company_id` and ingest new docs. Single index, zero leakage.
 
 Ready for Assessment 3.
