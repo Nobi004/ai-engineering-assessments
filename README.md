@@ -67,3 +67,79 @@ same body/parameters.
 **Multi-company ready:** Just change `company_id` and ingest new docs. Single index, zero leakage.
 
 Ready for Assessment 3.
+
+# AI Engineering Assessment – Part 3  
+**AI Agent SaaS Platform**  
+**Multi-tenant Web-based Social Media Automation & Lead Management System**
+
+**Objective**  
+Design and describe a production-grade SaaS platform where companies can connect their social media business pages/accounts, receive AI-powered automated replies, auto-tag incoming leads (hot / warm / cold), and synchronize qualified leads with their CRM system.
+
+**Date of design**  
+February 2026
+
+**Tech stack orientation**  
+- Backend: FastAPI (Python)  
+- Frontend: Next.js 14+ / React Server Components (or Streamlit for quick demo)  
+- AI orchestration: LangGraph (LangChain ecosystem)  
+- Database: PostgreSQL + PGVector (or SQLite + FAISS for local demo)  
+- Queue: Redis / Celery or RQ  
+- Auth: OAuth 2.0 + JWT (Auth0 / Clerk / self-hosted)  
+- Observability: OpenTelemetry, Prometheus, structured logging (structlog)
+
+## Table of Contents
+
+- [Product Overview](#product-overview)
+- [Key Features](#key-features)
+- [System Architecture Diagram](#system-architecture-diagram)
+- [Core Components & AI Agents](#core-components--ai-agents)
+- [Critical Data Flows](#critical-data-flows)
+- [Authentication & Authorization](#authentication--authorization)
+- [Multi-tenancy & Data Isolation](#multi-tenancy--data-isolation)
+- [Security & Privacy](#security--privacy)
+- [Cost Optimization Strategies](#cost-optimization-strategies)
+- [Failure Modes & Recovery Patterns](#failure-modes--recovery-patterns)
+- [Observability & Monitoring](#observability--monitoring)
+- [Local Demo Implementation Notes](#local-demo-implementation-notes)
+- [Future Scaling Path](#future-scaling-path)
+
+## Product Overview
+
+Companies sign up → connect social media business accounts (Facebook Pages, Instagram Business, X/Twitter, LinkedIn Pages, etc.) → the system listens for incoming messages, comments, mentions → AI agents analyze, reply automatically when appropriate, qualify leads, and push structured data to the company's CRM.
+
+Goal: Save time for social media & community managers while improving response speed and lead quality.
+
+## Key Features
+
+- Connect & manage multiple social media accounts per tenant
+- Real-time incoming message processing via webhooks
+- AI-generated context-aware auto-replies
+- Lead intent classification & qualification (hot / warm / cold)
+- Automatic tagging & entity extraction (name, email, company, interest…)
+- CRM integration (HubSpot, Salesforce, Pipedrive, custom webhook)
+- Tenant dashboard: leads overview, reply history, usage & cost tracking
+- Usage-based billing foundation (token consumption tracking)
+
+## System Architecture Diagram
+
+```mermaid
+graph TD
+    A[Company User<br>Browser / Mobile] -->|HTTPS + JWT| B[CDN / Load Balancer]
+    B --> C[Frontend<br>Next.js / React]
+    C -->|API calls / WS| D[Backend API<br>FastAPI]
+    
+    E[Social Platforms<br>FB/IG/X/LI] -->|Webhook POST| F[Webhook Receiver<br>FastAPI]
+    F --> G[Event Queue<br>Redis / RabbitMQ]
+    
+    G --> H[Background Workers<br>Celery / RQ]
+    H --> I[AI Agent Supervisor<br>LangGraph]
+    
+    I --> J[Specialized Agents<br>• Intent & Sentiment<br>• Lead Qualifier<br>• Entity Extractor<br>• Reply Generator<br>• Knowledge Retriever]
+    
+    J --> K[Vector Store<br>PGVector / Pinecone / Weaviate]
+    J --> L[Relational DB<br>PostgreSQL<br>Tenants • Leads • Connections]
+    
+    H --> M[CRM Sync Worker<br>Retry + Dead-letter]
+    M --> N[CRM Systems<br>HubSpot / Salesforce / Webhook]
+    
+    O[Observability<br>OTel + Prometheus + Loki / Grafana] -.-> D & H & I
