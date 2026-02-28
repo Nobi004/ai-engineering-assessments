@@ -53,59 +53,53 @@ This project demonstrates **three progressive AI engineering challenges** showca
 ### Directory Structure
 
 ```
-Assesment_mysoft_heaven/
-├── backend/                          # FastAPI application
-│   ├── main.py                      # App initialization, routes aggregation
-│   ├── middleware.py                # CORS, logging middleware
-│   └── __init__.py
-│
-├── assessments/                      # Three independent assessment modules
-│   ├── 01_workflow_automation/      # Assessment 1: Lead processing
-│   │   ├── routers.py               # POST /api/01-workflow/leads
-│   │   ├── schemas.py               # LeadInput, IntentResult, ExtractionResult
-│   │   ├── services.py              # Intent classification, field extraction
-│   │   └── prompts/                 # System prompts for LLM
-│   │
-│   ├── 02_rag_chatbot/              # Assessment 2: Company-specific RAG
-│   │   ├── routers.py               # POST /api/02-rag/chat (flexible params)
-│   │   ├── schemas.py               # ChatRequest, RAGResponse, ChatMessage
-│   │   ├── services.py              # Document ingestion, retrieval, generation
-│   │   └── prompts/                 # System prompts, rewrite instructions
-│   │
-│   └── 03_saas_ai_agent/            # Assessment 3: System design
-│       ├── design.md                # Architecture diagrams, data flows
-│       ├── agents/                  # Agent definitions (Reply, Qualifier, etc.)
-│       ├── auth/                    # JWT, OAuth patterns
-│       ├── crm/                     # CRM module design
-│       ├── tenants/                 # Multi-tenancy isolation
-│       └── webhooks/                # Webhook event handlers
-│
-├── core/                            # Shared utilities & clients
-│   ├── config.py                    # Environment configuration
-│   ├── database.py                  # SQLModel session management
-│   ├── llm_client.py                # OpenAI LLM wrapper
-│   ├── embedding_client.py          # Text embedding provider
-│   ├── vector_store.py              # FAISS + metadata persistence
-│   ├── logger.py                    # Structured logging (structlog)
-│   └── exceptions.py                # Custom exception hierarchy
-│
-├── data/                            # Data storage
-│   ├── faiss_indexes/               # FAISS index files (company_id-keyed)
-│   ├── uploads/                     # User-uploaded documents (structured)
-│   │   └── 02_rag/company_docs/    # Company documents per tenant
-│   └── chat_history/                # Persisted conversations (SQLite)
-│
-├── streamlit_apps/                  # Frontend demos
-│   ├── 01_workflow_app.py          # Lead processing UI
-│   ├── 02_rag_app.py               # Chat interface (Port 8501)
-│   └── (03_saas_app.py planned)    # Next.js for production
-│
-├── logs/                            # Application logs
-├── pyproject.toml                   # Project metadata, dependencies
-├── requirements.txt                 # Python dependencies
-├── LOCAL_SETUP.md                  # Local development guide
-├── README.md                        # Project overview
-└── ARCHITECTURE_GUIDE.md           # This file
+pyproject.toml
+README.md
+requirements.txt
+assessments/
+  01_workflow_automation/
+    __init__.py
+    routers.py
+    schemas.py
+    services.py
+    prompts/
+  02_rag_chatbot/
+    __init__.py
+    ingest.py
+    routers.py
+    schemas.py
+    services.py
+    prompts/
+  03_saas_ai_agent/
+    __init__.py
+    design.md
+    agents/
+    auth/
+    crm/
+    tenants/
+    webhooks/
+backend/
+  __init__.py
+  main.py
+  middleware.py
+  __pycache__/
+core/
+  __init__.py
+  config.py
+  database.py
+  embedding_client.py
+  exceptions.py
+  llm_client.py
+  logger.py
+  vector_store.py
+data/
+  faiss_indexes/
+    rag_index.faiss
+  uploads/
+logs/
+streamlit_apps/
+  01_workflow_app.py
+  02_rag_app.py
 ```
 
 ---
